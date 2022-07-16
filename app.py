@@ -23,7 +23,7 @@ url = 'https://bookings.better.org.uk/location/islington-tennis-centre/tennis-co
 
 browser.get(url)
 time.sleep(5)
-WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Book now')]"))).click()
+WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Book now')]"))).click()
 
 WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='username']"))).send_keys('danielroche10@gmail.com')
 WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='password']"))).send_keys('Dr061091!')
