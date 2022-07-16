@@ -1,3 +1,5 @@
+print("hello1")
+
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -6,6 +8,8 @@ import time
 from datetime import datetime, timedelta
 
 import os
+
+print("hello2")
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -45,3 +49,5 @@ browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", ele
 
 
 WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'I Agree')]"))).click()
+
+print("hello3")
