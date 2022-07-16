@@ -5,7 +5,15 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 from datetime import datetime, timedelta
 
-booking_date = (datetime.today() + timedelta(days=6)).strftime('%Y-%m-%d')
+import os
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--no-sandbox")
+browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+
 url = "https://bookings.better.org.uk/location/islington-tennis-centre/tennis-court-outdoor/2022-07-21/by-time/slot/13:00-14:00"
 
 browser = webdriver.Chrome(executable_path='./chromedriver')
