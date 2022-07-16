@@ -16,7 +16,6 @@ browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), 
 
 url = "https://bookings.better.org.uk/location/islington-tennis-centre/tennis-court-outdoor/2022-07-21/by-time/slot/13:00-14:00"
 
-browser = webdriver.Chrome(executable_path='./chromedriver')
 browser.get(url)
 time.sleep(5)
 WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Book now')]"))).click()
