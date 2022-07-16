@@ -18,7 +18,8 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--no-sandbox")
 browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
-url = "https://bookings.better.org.uk/location/islington-tennis-centre/tennis-court-outdoor/2022-07-21/by-time/slot/13:00-14:00"
+booking_date = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
+url = 'https://bookings.better.org.uk/location/islington-tennis-centre/tennis-court-outdoor/{}/by-time/slot/13:00-14:00'.format(booking_date)
 
 browser.get(url)
 time.sleep(5)
