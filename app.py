@@ -48,6 +48,6 @@ ele = WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//
 browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", ele)
 
 WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'I Agree')]"))).click()
-#WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
+WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
 
 print("hello3")
