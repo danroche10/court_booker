@@ -19,7 +19,7 @@ chrome_options.add_argument("--no-sandbox")
 browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
 booking_date = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
-url = 'https://bookings.better.org.uk/location/islington-tennis-centre/tennis-court-outdoor/{}/by-time/slot/19:00-20:00'.format(booking_date)
+url = 'https://bookings.better.org.uk/location/islington-tennis-centre/tennis-court-outdoor/{}/by-time/slot/18:00-19:00'.format(booking_date)
 
 browser.get(url)
 time.sleep(5)
