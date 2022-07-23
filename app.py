@@ -20,7 +20,7 @@ def job():
   browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
 
   booking_date = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
-  url = 'https://bookings.better.org.uk/location/islington-tennis-centre/tennis-court-outdoor/{}/by-time/slot/17:00-18:00'.format(booking_date)
+  url = 'https://bookings.better.org.uk/location/islington-tennis-centre/tennis-court-outdoor/{}/by-time/slot/22:00-23:00'.format(booking_date)
   #browser = webdriver.Chrome(executable_path='./chromedriver')
   browser.get(url)
   time.sleep(5)
@@ -50,9 +50,10 @@ def job():
 
   #WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'I Agree')]"))).click()
   #WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
+  #time.sleep(5)
   print("hello3")
 
-schedule.every().day.at("13:03").do(job)
+schedule.every().day.at("13:15").do(job)
 
 while True:
     schedule.run_pending()
