@@ -53,7 +53,7 @@ def job():
   #time.sleep(5)
   print("hello3")
 
-schedule.every().day.at("13:28").do(job)
+schedule.every().day.at("13:34").do(job)
 
 while True:
     schedule.run_pending()
