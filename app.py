@@ -52,7 +52,7 @@ def job():
   #WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
   print("hello3")
 
-schedule.every().day.at("12:57").do(job)
+schedule.every().day.at("13:03").do(job)
 
 while True:
     schedule.run_pending()
