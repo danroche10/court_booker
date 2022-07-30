@@ -12,17 +12,18 @@ load_dotenv()
 
 def fill_out_booking_details():
 
-  #add_chrome_options_for_heroku()
+  heroku_chrome_options = add_chrome_options_for_heroku()
   
   # browser for production version
-  #browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+  browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=heroku_chrome_options)
 
   booking_date = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
   url = 'https://bookings.better.org.uk/location/islington-tennis-centre/tennis-court-outdoor/{}/by-time/slot/11:00-12:00'.format(booking_date)
-  browser = webdriver.Chrome(executable_path='./chromedriver')
+  
+  # browser for dev version
+  #browser = webdriver.Chrome(executable_path='./chromedriver')
   browser.get(url)
 
-  
   time.sleep(2)
   get_list_of_courts(browser)
   time.sleep(2)
@@ -47,6 +48,7 @@ def add_chrome_options_for_heroku():
   chrome_options.add_argument("--headless")
   chrome_options.add_argument("--disable-dev-shm-usage")
   chrome_options.add_argument("--no-sandbox")
+  return chrome_options
 
 
 def get_list_of_courts(browser):
@@ -119,7 +121,7 @@ def pay_for_booking(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
 
 def schedule_job():
- schedule.every().day.at("15:38").do(book_court)
+ schedule.every().day.at("15:37").do(book_court)
  while True:
   schedule.run_pending()
   time.sleep(1)
@@ -133,8 +135,8 @@ def book_court():
     print(ex)
     sys.exit(0)
 
-#book_court()
-schedule_job()
+book_court()
+#schedule_job()
 
 
 
