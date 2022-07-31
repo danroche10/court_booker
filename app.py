@@ -22,7 +22,7 @@ def fill_out_booking_details():
   browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
 
   booking_date = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
-  url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/2022-08-05/by-time/slot/22:00-23:00'.format(booking_date)
+  url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/2022-08-05/by-time/slot/17:00-18:00'.format(booking_date)
 
   # browser for dev version
   #browser = webdriver.Chrome(executable_path='./chromedriver')
@@ -128,7 +128,7 @@ def pay_for_booking(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
 
 def schedule_job():
- schedule.every().day.at("13:02").do(book_court)
+ schedule.every().day.at("13:17").do(book_court)
  while True:
   schedule.run_pending()
   time.sleep(1)
