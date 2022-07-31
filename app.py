@@ -21,8 +21,8 @@ def fill_out_booking_details():
   chrome_options.add_argument("--no-sandbox")
   browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
 
-  booking_date = (datetime.today() + timedelta(days=6)).strftime('%Y-%m-%d')
-  url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/19:00-20:00'.format(booking_date)
+  booking_date = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
+  url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/17:00-18:00'.format(booking_date)
 
   # browser for dev version
   #browser = webdriver.Chrome(executable_path='./chromedriver')
@@ -42,7 +42,7 @@ def fill_out_booking_details():
   time.sleep(2)
   fill_out_payment_details(browser)
   #agree_to_terms_and_conditions(browser) // no longer needed
-  pay_for_booking(browser)
+  #pay_for_booking(browser)
   time.sleep(15)
   print("script complete")
 
@@ -127,7 +127,7 @@ def pay_for_booking(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
 
 def schedule_job():
- schedule.every().day.at("21:01").do(book_court)
+ schedule.every().minute.at(":30").do(book_court)
  while True:
   schedule.run_pending()
   time.sleep(1)
@@ -135,7 +135,7 @@ def schedule_job():
 def book_court():
   try:
     fill_out_booking_details()
-    sys.exit(0)
+    #sys.exit(0)
   except Exception as ex:
     # add proper error handling
     print(ex)
