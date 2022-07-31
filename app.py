@@ -10,6 +10,15 @@ import schedule
 import os
 load_dotenv()
 
+import os
+ON_HEROKU = os.environ.get('ON_HEROKU')
+
+if ON_HEROKU:
+    # get the heroku port
+    port = int(os.environ.get('PORT', 17995))  # as per OP comments default is 17995
+else:
+    port = 3000
+
 def fill_out_booking_details():
 
   # browser for production version
@@ -127,7 +136,7 @@ def pay_for_booking(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
 
 def schedule_job():
- schedule.every().day.at("12:29").do(book_court)
+ schedule.every().day.at("12:35").do(book_court)
  while True:
   schedule.run_pending()
   time.sleep(1)
