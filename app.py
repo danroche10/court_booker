@@ -142,8 +142,8 @@ def book_court():
     print(ex)
     sys.exit(0)
 
-#book_court()
-schedule_job()
+book_court()
+#schedule_job()
 
 
 
