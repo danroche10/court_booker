@@ -42,7 +42,7 @@ def fill_out_booking_details():
   time.sleep(2)
   fill_out_payment_details(browser)
   #agree_to_terms_and_conditions(browser) // no longer needed
-  #pay_for_booking(browser)
+  pay_for_booking(browser)
   time.sleep(15)
   print("script complete")
 
@@ -127,7 +127,7 @@ def pay_for_booking(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
 
 def schedule_job():
- schedule.every().monday.at("21:01").do(book_court)
+ schedule.every().tuesday.at("21:01").do(book_court)
  while True:
   schedule.run_pending()
   time.sleep(1)
