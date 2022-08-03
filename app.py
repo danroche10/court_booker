@@ -127,7 +127,7 @@ def pay_for_booking(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
 
 def schedule_job():
- schedule.every().wednesday.at("21:00").do(book_court)
+ schedule.every().thursday.at("21:00").do(book_court)
  while True:
   schedule.run_pending()
   time.sleep(1)
