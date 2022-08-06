@@ -11,12 +11,11 @@ import os
 load_dotenv()
 import os
 
-#booking_date = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
+#booking_date_for_x_days_time = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
 next_monday = (datetime.today() + timedelta( (1-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
 url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/19:00-20:00'.format(next_monday)
 
 def attempt_court_booking(url):
-
   # browser + chrome_options for production version
   chrome_options = add_chrome_options_for_heroku()
   browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
@@ -101,11 +100,11 @@ def is_court_confirmed(browser):
 def confirm_payment(browser):
   fill_out_payment_details(browser)
   #agree_to_terms_and_conditions(browser) // no longer needed
-  #pay_for_booking(browser)
+  pay_for_booking(browser)
   time.sleep(1)
 
 def schedule_job():
- schedule.every().minute.at(":17").do(book_court)
+ schedule.every(10).minutes.do(book_court)
  while True:
   schedule.run_pending()
   time.sleep(1)
