@@ -11,7 +11,10 @@ import os
 load_dotenv()
 import os
 
-def fill_out_booking_details():
+booking_date = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
+url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/20:00-21:00'.format(booking_date)
+
+def fill_out_booking_details(url):
 
   # browser for production version
   chrome_options = add_chrome_options_for_heroku()
@@ -19,16 +22,10 @@ def fill_out_booking_details():
 
   # browser for dev version
   #browser = webdriver.Chrome(executable_path='./chromedriver')
-
-  booking_date = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
-  url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/20:00-21:00'.format(booking_date)
-
   browser.get(url)
 
   find_court(browser)
   confirm_payment(browser)
-
-  print("script complete")
 
 def add_chrome_options_for_heroku():
   chrome_options = webdriver.ChromeOptions()
@@ -113,12 +110,6 @@ def fill_out_payment_details(browser):
 def pay_for_booking(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
 
-def schedule_job():
- schedule.every().saturday.at("13:31").do(book_court)
- while True:
-  schedule.run_pending()
-  time.sleep(1)
-
 def find_court(browser):
   get_list_of_courts(browser)
   check_for_available_court(browser)
@@ -134,10 +125,15 @@ def confirm_payment(browser):
   #pay_for_booking(browser)
   time.sleep(2)
 
+def schedule_job():
+ schedule.every().saturday.at("13:36").do(book_court)
+ while True:
+  schedule.run_pending()
+  time.sleep(1)
 
 def book_court():
   try:
-    fill_out_booking_details()
+    fill_out_booking_details(url)
   except Exception as ex:
     # add proper error handling
     print(ex)
