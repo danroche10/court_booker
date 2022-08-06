@@ -104,7 +104,7 @@ def confirm_payment(browser):
   time.sleep(1)
 
 def schedule_job():
- schedule.every(10).minutes.do(book_court)
+ schedule.every(1).minutes.do(book_court)
  while True:
   schedule.run_pending()
   time.sleep(1)
