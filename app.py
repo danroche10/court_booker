@@ -15,36 +15,19 @@ def fill_out_booking_details():
 
   # browser for production version
   chrome_options = add_chrome_options_for_heroku()
-  #chrome_options = webdriver.ChromeOptions()
-  #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-  #chrome_options.add_argument("--headless")
-  #chrome_options.add_argument("--disable-dev-shm-usage")
-  #chrome_options.add_argument("--no-sandbox")
   browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
+
+  # browser for dev version
+  #browser = webdriver.Chrome(executable_path='./chromedriver')
 
   booking_date = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
   url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/20:00-21:00'.format(booking_date)
 
-  # browser for dev version
-  #browser = webdriver.Chrome(executable_path='./chromedriver')
   browser.get(url)
 
-  time.sleep(2)
-  get_list_of_courts(browser)
-  time.sleep(2)
-  check_for_available_court(browser)
-  confirm_booking(browser)  
-  login(browser)
-  time.sleep(2)
-  get_list_of_courts(browser)
-  time.sleep(2)
-  check_for_available_court(browser)
-  confirm_booking(browser)
-  time.sleep(2)
-  fill_out_payment_details(browser)
-  #agree_to_terms_and_conditions(browser) // no longer needed
-  #pay_for_booking(browser)
-  time.sleep(10)
+  find_court(browser)
+  confirm_payment(browser)
+
   print("script complete")
 
 def add_chrome_options_for_heroku():
@@ -57,12 +40,14 @@ def add_chrome_options_for_heroku():
 
 def get_list_of_courts(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[@class=' css-xz6p7f']"))).click()
+  time.sleep(2)
 
 def login(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='username']"))).send_keys(os.environ.get("username"))
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='password']"))).send_keys(os.environ.get("password"))
   showmore_link = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 fBHwHD SharedLoginComponent__LoginButton-sc-hdtxi2-5 fQXEJi') and @type='submit']")))
   showmore_link.click()
+  time.sleep(2)
 
 def check_for_available_court(browser):
   if len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 1"]')) > 0:
@@ -104,6 +89,7 @@ def check_for_available_court(browser):
 def confirm_booking(browser):
   showmore_link2 = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 fBHwHD') and @type='button']")))
   showmore_link2.click()
+  time.sleep(2)
 
 def agree_to_terms_and_conditions(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Continue')]"))).click()
@@ -128,10 +114,26 @@ def pay_for_booking(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
 
 def schedule_job():
- schedule.every().saturday.at("13:19").do(book_court)
+ schedule.every().saturday.at("13:31").do(book_court)
  while True:
   schedule.run_pending()
   time.sleep(1)
+
+def find_court(browser):
+  get_list_of_courts(browser)
+  check_for_available_court(browser)
+  confirm_booking(browser)  
+  login(browser)
+  get_list_of_courts(browser)
+  check_for_available_court(browser)
+  confirm_booking(browser) 
+
+def confirm_payment(browser):
+  fill_out_payment_details(browser)
+  #agree_to_terms_and_conditions(browser) // no longer needed
+  #pay_for_booking(browser)
+  time.sleep(2)
+
 
 def book_court():
   try:
