@@ -12,8 +12,8 @@ load_dotenv()
 import os
 
 #booking_date_for_x_days_time = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
-next_monday = (datetime.today() + timedelta( (4-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
-url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/20:00-21:00'.format(next_monday)
+next_monday = (datetime.today() + timedelta( (0-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
+url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/19:00-20:00'.format(next_monday)
 
 def attempt_court_booking(url):
   # browser + chrome_options for production version
@@ -39,14 +39,14 @@ def add_chrome_options_for_heroku():
 
 def get_list_of_courts(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//div[@class=' css-xz6p7f']"))).click()
-  time.sleep(1)
+  time.sleep(2)
 
 def login(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='username']"))).send_keys(os.environ.get("username"))
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='password']"))).send_keys(os.environ.get("password"))
   showmore_link = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 fBHwHD SharedLoginComponent__LoginButton-sc-hdtxi2-5 fQXEJi') and @type='submit']")))
   showmore_link.click()
-  time.sleep(1)
+  time.sleep(2)
 
 def is_court_available(browser):
   for x in range(1, 11):
@@ -61,7 +61,7 @@ def is_court_available(browser):
 def confirm_booking(browser):
   showmore_link2 = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 fBHwHD') and @type='button']")))
   showmore_link2.click()
-  time.sleep(1)
+  time.sleep(2)
 
 def agree_to_terms_and_conditions(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Continue')]"))).click()
@@ -94,20 +94,22 @@ def is_court_confirmed(browser):
     get_list_of_courts(browser)
     is_court_available(browser)
     confirm_booking(browser)
+    time.sleep(2)
+    return True  
   else:
     return False
 
 def confirm_payment(browser):
   fill_out_payment_details(browser)
   #agree_to_terms_and_conditions(browser) // no longer needed
-  #pay_for_booking(browser)
-  time.sleep(1)
+  pay_for_booking(browser)
+  time.sleep(2)
 
 def schedule_job():
- schedule.every(1).minutes.do(book_court)
+ schedule.every(10).minutes.do(book_court)
  while True:
   schedule.run_pending()
-  time.sleep(1)
+  time.sleep(2)
 
 def book_court():
   try:
