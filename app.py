@@ -12,8 +12,8 @@ load_dotenv()
 import os
 
 #booking_date_for_x_days_time = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
-next_monday = (datetime.today() + timedelta( (1-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
-url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/19:00-20:00'.format(next_monday)
+next_monday = (datetime.today() + timedelta( (4-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
+url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/20:00-21:00'.format(next_monday)
 
 def attempt_court_booking(url):
   # browser + chrome_options for production version
@@ -100,7 +100,7 @@ def is_court_confirmed(browser):
 def confirm_payment(browser):
   fill_out_payment_details(browser)
   #agree_to_terms_and_conditions(browser) // no longer needed
-  pay_for_booking(browser)
+  #pay_for_booking(browser)
   time.sleep(1)
 
 def schedule_job():
