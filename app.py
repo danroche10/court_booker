@@ -127,7 +127,7 @@ def confirm_payment(browser):
   time.sleep(2)
 
 def schedule_job():
- schedule.every().saturday.at("13:36").do(book_court)
+ schedule.every().saturday.at("13:53").do(book_court)
  while True:
   schedule.run_pending()
   time.sleep(1)
