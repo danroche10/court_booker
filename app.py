@@ -14,15 +14,16 @@ import os
 def fill_out_booking_details():
 
   # browser for production version
-  chrome_options = webdriver.ChromeOptions()
-  chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-  chrome_options.add_argument("--headless")
-  chrome_options.add_argument("--disable-dev-shm-usage")
-  chrome_options.add_argument("--no-sandbox")
+  chrome_options = add_chrome_options_for_heroku()
+  #chrome_options = webdriver.ChromeOptions()
+  #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+  #chrome_options.add_argument("--headless")
+  #chrome_options.add_argument("--disable-dev-shm-usage")
+  #chrome_options.add_argument("--no-sandbox")
   browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
 
-  booking_date = (datetime.today() + timedelta(days=6)).strftime('%Y-%m-%d')
-  url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/19:00-20:00'.format(booking_date)
+  booking_date = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
+  url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/20:00-21:00'.format(booking_date)
 
   # browser for dev version
   #browser = webdriver.Chrome(executable_path='./chromedriver')
@@ -42,7 +43,7 @@ def fill_out_booking_details():
   time.sleep(2)
   fill_out_payment_details(browser)
   #agree_to_terms_and_conditions(browser) // no longer needed
-  pay_for_booking(browser)
+  #pay_for_booking(browser)
   time.sleep(10)
   print("script complete")
 
@@ -127,7 +128,7 @@ def pay_for_booking(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
 
 def schedule_job():
- schedule.every().friday.at("21:00").do(book_court)
+ schedule.every().saturday.at("13:19").do(book_court)
  while True:
   schedule.run_pending()
   time.sleep(1)
