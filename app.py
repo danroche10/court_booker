@@ -47,41 +47,42 @@ def login(browser):
   time.sleep(2)
 
 def check_for_available_court(browser):
-  if len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 1"]')) > 0:
-    browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 1"]').click()
-    time.sleep(2)
-  elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 2"]')) > 0:
-    browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 2"]').click()
-    time.sleep(2)
-  elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 3"]')) > 0:
-    browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 3"]').click()
-    time.sleep(2)
-  elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 4"]')) > 0:
-    browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 4"]').click()
-    time.sleep(2)
-  elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 5"]')) > 0:
-    browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 5"]').click()
-    time.sleep(2)
-  elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 6"]')) > 0:
-    browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 6"]').click()
-    time.sleep(2)
-  elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 7"]')) > 0:
-    browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 7"]').click()
-    time.sleep(2)
-  elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 8"]')) > 0:
-    browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 8"]').click()
-    time.sleep(2)
-  elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 9"]')) > 0:
-    browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 9"]').click()
-    time.sleep(2)
-  elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 10"]')) > 0:
-    browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 10"]').click()
-    time.sleep(2)
-  elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 11"]')) > 0:
-    browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 11"]').click()
-    time.sleep(2)
-  else:
-    print("court unavailable")
+  for x in range(11):
+    if len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court ${x}"]')) > 0:
+      browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court ${x}"]').click()
+      time.sleep(2)
+    # elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 2"]')) > 0:
+    #   browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 2"]').click()
+    #   time.sleep(2)
+    # elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 3"]')) > 0:
+    #   browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 3"]').click()
+    #   time.sleep(2)
+    # elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 4"]')) > 0:
+    #   browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 4"]').click()
+    #   time.sleep(2)
+    # elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 5"]')) > 0:
+    #   browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 5"]').click()
+    #   time.sleep(2)
+    # elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 6"]')) > 0:
+    #   browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 6"]').click()
+    #   time.sleep(2)
+    # elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 7"]')) > 0:
+    #   browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 7"]').click()
+    #   time.sleep(2)
+    # elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 8"]')) > 0:
+    #   browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 8"]').click()
+    #   time.sleep(2)
+    # elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 9"]')) > 0:
+    #   browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 9"]').click()
+    #   time.sleep(2)
+    # elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 10"]')) > 0:
+    #   browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 10"]').click()
+    #   time.sleep(2)
+    # elif len(browser.find_elements(By.XPATH, '//div[text()="Highbury Fields Tennis Court 11"]')) > 0:
+    #   browser.find_element(By.XPATH, '//div[text()="Highbury Fields Tennis Court 11"]').click()
+    #   time.sleep(2)
+    else:
+      print("court unavailable")
 
 def confirm_booking(browser):
   showmore_link2 = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 fBHwHD') and @type='button']")))
