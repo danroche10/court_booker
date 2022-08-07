@@ -11,9 +11,9 @@ import os
 load_dotenv()
 import os
 
-#booking_date_for_x_days_time = (datetime.today() + timedelta(days=5)).strftime('%Y-%m-%d')
 next_monday = (datetime.today() + timedelta( (0-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
-url = 'https://bookings.better.org.uk/location/islington-tennis-centre/highbury-tennis/{}/by-time/slot/19:00-20:00'.format(next_monday)
+booking_time = "19:00-20:00"
+url = '{}/{}/by-time/slot/{}'.format((os.environ.get("url")), next_monday, booking_time)
 
 def attempt_court_booking(url):
   # browser + chrome_options for production version
@@ -27,7 +27,7 @@ def attempt_court_booking(url):
   if is_court_confirmed(browser) == True:
     confirm_payment(browser)
   else:
-    return False
+    return
 
 def add_chrome_options_for_heroku():
   chrome_options = webdriver.ChromeOptions()
@@ -50,7 +50,7 @@ def login(browser):
 
 def is_court_available(browser):
   for x in range(1, 11):
-    court_div = '//div[text()="Highbury Fields Tennis Court {}"]'.format(x)
+    court_div = '//div[text()="{} {}"]'.format(os.environ.get("court-name"), x)
     if len(browser.find_elements(By.XPATH, court_div)) > 0:
       browser.find_element(By.XPATH, court_div).click()
       time.sleep(2)
