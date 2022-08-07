@@ -103,7 +103,8 @@ def confirm_payment(browser):
   fill_out_payment_details(browser)
   #agree_to_terms_and_conditions(browser) // no longer needed
   pay_for_booking(browser)
-  time.sleep(2)
+  print("paying for booking....")
+  time.sleep(10)
 
 def schedule_job():
  schedule.every(10).minutes.do(book_court)
