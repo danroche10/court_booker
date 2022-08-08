@@ -52,6 +52,7 @@ def is_court_available(browser):
   for x in range(1, 11):
     court_div = '//div[text()="{} {}"]'.format(os.environ.get("court-name"), x)
     if len(browser.find_elements(By.XPATH, court_div)) > 0:
+      print("court found")
       browser.find_element(By.XPATH, court_div).click()
       time.sleep(2)
       return True
@@ -88,7 +89,6 @@ def pay_for_booking(browser):
 def is_court_confirmed(browser):
   get_list_of_courts(browser)
   if is_court_available(browser) == True:
-    print("court available")
     confirm_booking(browser)  
     login(browser)
     # above step must be repeated after logging in
