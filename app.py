@@ -11,9 +11,9 @@ import os
 load_dotenv()
 import os
 
-next_thursday = (datetime.today() + timedelta( (3-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
+next_monday = (datetime.today() + timedelta( (3-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
 booking_time = "19:00-20:00"
-url = '{}/{}/by-time/slot/{}'.format((os.environ.get("url")), next_thursday, booking_time)
+url = '{}/{}/by-time/slot/{}'.format((os.environ.get("url")), next_monday, booking_time)
 
 def attempt_court_booking(url):
   # browser + chrome_options for production version
@@ -24,7 +24,7 @@ def attempt_court_booking(url):
   #browser = webdriver.Chrome(executable_path='./chromedriver')
   browser.get(url)
 
-  if is_court_confirmed(browser) == True:
+  if is_court_confirmed(browser):
     confirm_payment(browser)
   else:
     return
@@ -88,7 +88,7 @@ def pay_for_booking(browser):
 
 def is_court_confirmed(browser):
   get_list_of_courts(browser)
-  if is_court_available(browser) == True:
+  if is_court_available(browser):
     confirm_booking(browser)  
     login(browser)
     # above step must be repeated after logging in
@@ -112,7 +112,7 @@ def pay_for_court_with_credit(browser):
     time.sleep(10)
       
 def confirm_payment(browser):
-  if (can_amount_be_paid_with_credit(browser) == True):
+  if (can_amount_be_paid_with_credit(browser)):
     pay_for_court_with_credit(browser)
     return
   fill_out_payment_details(browser)
