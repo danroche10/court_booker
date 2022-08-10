@@ -11,7 +11,7 @@ import os
 load_dotenv()
 import os
 
-next_monday = (datetime.today() + timedelta( (3-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
+next_monday = (datetime.today() + timedelta( (0-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
 booking_time = "19:00-20:00"
 url = '{}/{}/by-time/slot/{}'.format((os.environ.get("url")), next_monday, booking_time)
 
