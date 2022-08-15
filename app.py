@@ -11,9 +11,9 @@ import os
 load_dotenv()
 import os
 
-next_monday = (datetime.today() + timedelta( (0-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
+next_tuesday = (datetime.today() + timedelta( (1-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
 booking_time = "19:00-20:00"
-url = '{}/{}/by-time/slot/{}'.format((os.environ.get("url")), next_monday, booking_time)
+url = '{}/{}/by-time/slot/{}'.format((os.environ.get("url")), next_tuesday, booking_time)
 
 def attempt_court_booking(url):
   # browser + chrome_options for production version
@@ -103,6 +103,7 @@ def is_court_confirmed(browser):
 def can_amount_be_paid_with_credit(browser):
   if len(browser.find_elements(By.XPATH, '//span[text()="Pay full amount using credit"]')) > 0:
     return True
+  return False
 
 def pay_for_court_with_credit(browser):
     browser.find_element(By.XPATH, '//span[text()="Pay full amount using credit"]').click()
