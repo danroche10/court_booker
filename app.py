@@ -138,8 +138,3 @@ def book_court():
 
 #book_court()
 schedule_job()
-
-#test commit
-
-
-
