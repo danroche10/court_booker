@@ -12,7 +12,7 @@ load_dotenv()
 import os
 
 next_monday = (datetime.today() + timedelta( (0-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
-booking_time = "16:00-17:00"
+booking_time = "19:00-20:00"
 url = '{}/{}/by-time/slot/{}'.format((os.environ.get("url")), next_monday, booking_time)
 
 def attempt_court_booking(url):
@@ -91,9 +91,7 @@ def is_court_confirmed(browser):
   if is_court_available(browser):
     confirm_booking(browser)  
     login(browser)
-    # above step must be repeated after logging in
-    # get_list_of_courts(browser)
-    # is_court_available(browser)
+    # booking must be confirmed again after logging in
     confirm_booking(browser)
     time.sleep(2)
     return True  
@@ -117,8 +115,7 @@ def confirm_payment(browser):
     pay_for_court_with_credit(browser)
     return
   fill_out_payment_details(browser)
-  #agree_to_terms_and_conditions(browser) // no longer needed
-  # pay_for_booking(browser)
+  pay_for_booking(browser)
   print("paying for booking....")
   time.sleep(10)
 
