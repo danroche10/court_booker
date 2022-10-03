@@ -92,6 +92,8 @@ def is_court_confirmed(browser):
     confirm_booking(browser)  
     login(browser)
     # booking must be confirmed again after logging in
+    get_list_of_courts(browser)
+    is_court_available(browser)
     confirm_booking(browser)
     time.sleep(2)
     return True  
