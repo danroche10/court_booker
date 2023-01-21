@@ -11,7 +11,7 @@ import os
 load_dotenv()
 import os
 
-next_monday = (datetime.today() + timedelta( (2-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
+next_monday = (datetime.today() + timedelta( (0-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
 booking_time = "19:00-20:00"
 url = '{}/{}/by-time/slot/{}'.format((os.environ.get("url")), next_monday, booking_time)
 
@@ -20,8 +20,8 @@ def attempt_court_booking(url):
   chrome_options = add_chrome_options_for_heroku()
   browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
 
-  # browser for dev version
-  #browser = webdriver.Chrome(executable_path='./chromedriver')
+  # browser for dev env
+  # browser = webdriver.Chrome(executable_path='./chromedriver')
   browser.get(url)
 
   if is_court_confirmed(browser):
@@ -72,7 +72,7 @@ def agree_to_terms_and_conditions(browser):
 
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'I Agree')]"))).click()
 
-def fill_out_payment_details(browser):
+def fill_out_payment_details_old(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='billingFirstName']"))).send_keys(os.environ.get("first-name"))
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='billingLastName']"))).send_keys(os.environ.get("last-name"))
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='billingAddressLineOne']"))).send_keys(os.environ.get("billing-address-line-one"))
@@ -83,8 +83,11 @@ def fill_out_payment_details(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='expiryDate']"))).send_keys(os.environ.get("expiry-date"))
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='securityCode']"))).send_keys(os.environ.get("security-code"))
 
+def fill_out_payment_details(browser):
+  WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='securityCode']"))).send_keys(os.environ.get("security-code"))
+
 def pay_for_booking(browser):
-  WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[contains(., 'Pay')]"))).click()
+  WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='PayNowButton__PayText-sc-1wm3jnf-2 ciaRFn']"))).click()
 
 def is_court_confirmed(browser):
   get_list_of_courts(browser)
@@ -135,5 +138,5 @@ def book_court():
     print(ex)
     sys.exit(0)
 
-#book_court()
+# book_court()
 schedule_job()
