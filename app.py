@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
 from dotenv import load_dotenv
 import time
 from datetime import datetime, timedelta
@@ -18,7 +19,7 @@ url = '{}/{}/by-time/slot/{}'.format((os.environ.get("url")), next_tuesday, book
 def attempt_court_booking(url):
   # browser + chrome_options for production version
   chrome_options = add_chrome_options_for_heroku()
-  browser = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
+  browser = webdriver.Chrome(service=Service(os.environ.get("CHROMEDRIVER_PATH")), options=chrome_options)
 
   # browser for dev env
   # browser = webdriver.Chrome(executable_path='./chromedriver')
