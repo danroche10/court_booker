@@ -22,7 +22,8 @@ def attempt_court_booking(url):
   browser = webdriver.Chrome(service=Service(os.environ.get("CHROMEDRIVER_PATH")), options=chrome_options)
 
   # browser for dev env
-  # browser = webdriver.Chrome(executable_path='./chromedriver')
+  # service = Service('./chromedriver')
+  # browser = webdriver.Chrome(service=service)
   browser.get(url)
 
   if is_court_confirmed(browser):
