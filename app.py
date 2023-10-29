@@ -13,7 +13,7 @@ load_dotenv()
 import os
 
 next_tuesday = (datetime.today() + timedelta( (1-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
-booking_time = "19:00-20:00"
+booking_time = "16:00-17:00"
 url = '{}/{}/by-time/slot/{}'.format((os.environ.get("url")), next_tuesday, booking_time)
 
 def attempt_court_booking(url):
