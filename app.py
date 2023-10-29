@@ -12,7 +12,7 @@ import os
 load_dotenv()
 import os
 
-next_tuesday = (datetime.today() + timedelta( (4-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
+next_tuesday = (datetime.today() + timedelta( (1-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
 booking_time = "19:00-20:00"
 url = '{}/{}/by-time/slot/{}'.format((os.environ.get("url")), next_tuesday, booking_time)
 
@@ -46,7 +46,7 @@ def get_list_of_courts(browser):
 def login(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='username']"))).send_keys(os.environ.get("username"))
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='password']"))).send_keys(os.environ.get("password"))
-  showmore_link = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 fBHwHD SharedLoginComponent__LoginButton-sc-hdtxi2-5 fQXEJi') and @type='submit']")))
+  showmore_link = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 ccoZFi SharedLoginComponent__LoginButton-sc-hdtxi2-5 iHMekP') and @type='submit']")))
   showmore_link.click()
   time.sleep(2)
 
@@ -62,7 +62,7 @@ def is_court_available(browser):
   return False
 
 def confirm_booking(browser):
-  showmore_link2 = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 fBHwHD') and @type='button']")))
+  showmore_link2 = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 ccoZFi') and @type='button']")))
   showmore_link2.click()
   time.sleep(2)
 
@@ -89,7 +89,7 @@ def fill_out_payment_details(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='securityCode']"))).send_keys(os.environ.get("security-code"))
 
 def pay_for_booking(browser):
-  WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='PayNowButton__PayText-sc-1wm3jnf-2 ciaRFn']"))).click()
+  WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='PayNowButton__PayText-sc-1wm3jnf-2 fNBsUK']"))).click()
 
 def is_court_confirmed(browser):
   get_list_of_courts(browser)
