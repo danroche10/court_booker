@@ -122,7 +122,7 @@ def confirm_payment(browser):
     pay_for_court_with_credit(browser)
     return
   fill_out_payment_details(browser)
-  time.sleep(5)
+  time.sleep(2)
   pay_for_booking(browser)
   print("paying for booking....")
   time.sleep(10)
