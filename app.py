@@ -106,7 +106,7 @@ def is_court_confirmed(browser):
     return False
 
 def can_amount_be_paid_with_credit(browser):
-  if len(browser.find_elements(By.XPATH, '//span[text()="Pay full amount using credit"]')) > 0:
+  if len(browser.find_elements(By.XPATH, '//span[text()="Use full credit balance"]')) > 0:
     return True
   return False
 
