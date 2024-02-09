@@ -107,11 +107,12 @@ def is_court_confirmed(browser):
 
 def can_amount_be_paid_with_credit(browser):
   if len(browser.find_elements(By.XPATH, '//span[text()="Use full credit balance"]')) > 0:
+    print("credit available to pay for court")
     return True
   return False
 
 def pay_for_court_with_credit(browser):
-    browser.find_element(By.XPATH, '//span[text()="Pay full amount using credit"]').click()
+    browser.find_element(By.XPATH, '//span[text()="Use full credit balance"]').click()
     print("paying using credit")
     time.sleep(2)
     browser.find_element(By.XPATH, '//span[text()="Confirm booking"]').click()
