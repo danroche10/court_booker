@@ -119,9 +119,11 @@ def pay_for_court_with_credit(browser):
     time.sleep(10)
       
 def confirm_payment(browser):
+  print("confirming payment")
   if (can_amount_be_paid_with_credit(browser)):
     pay_for_court_with_credit(browser)
     return
+  print("not enough credit available to pay for court")
   fill_out_payment_details(browser)
   time.sleep(2)
   pay_for_booking(browser)
