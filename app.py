@@ -13,7 +13,7 @@ load_dotenv()
 import os
 
 next_tuesday = (datetime.today() + timedelta( (1-datetime.today().weekday()) % 7 )).strftime('%Y-%m-%d')
-booking_time = "17:00-18:00"
+booking_time = "19:00-20:00"
 url = '{}/{}/by-time/slot/{}'.format((os.environ.get("url")), next_tuesday, booking_time)
 
 def attempt_court_booking(url):
@@ -117,6 +117,7 @@ def pay_for_court_with_credit(browser):
     time.sleep(2)
     browser.find_element(By.XPATH, '//span[text()="Confirm booking"]').click()
     time.sleep(10)
+    print("booking confirmed")
       
 def confirm_payment(browser):
   print("confirming payment")
