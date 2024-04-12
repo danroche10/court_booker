@@ -46,7 +46,7 @@ def get_list_of_courts(browser):
 def login(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='username']"))).send_keys(os.environ.get("username"))
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//input[@name='password']"))).send_keys(os.environ.get("password"))
-  showmore_link = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 ccoZFi SharedLoginComponent__LoginButton-sc-hdtxi2-5 iHMekP') and @type='submit']")))
+  showmore_link = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 cEQnin SharedLoginComponent__LoginButton-sc-hdtxi2-5 htvyQa') and @type='submit']")))
   showmore_link.click()
   time.sleep(2)
 
@@ -62,7 +62,7 @@ def is_court_available(browser):
   return False
 
 def confirm_booking(browser):
-  showmore_link2 = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 ccoZFi') and @type='button']")))
+  showmore_link2 = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, ".//button[contains(@class,'Button__StyledButton-sc-5h7i9w-1 cEQnin') and @type='button']")))
   showmore_link2.click()
   time.sleep(2)
 
