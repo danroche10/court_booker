@@ -91,9 +91,19 @@ def fill_out_payment_details(browser):
 def pay_for_booking(browser):
   WebDriverWait(browser, 10).until(EC.element_to_be_clickable((By.XPATH, "//span[@class='PayNowButton__PayText-sc-1wm3jnf-2 fNBsUK']"))).click()
 
+def click_cookies_button(browser):
+  try:
+    cookies_button = WebDriverWait(browser, 20).until(
+        EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler"))
+    )
+    cookies_button.click()
+    return True
+  except Exception as e:
+    print(f"Error clicking cookies button: {e}")
+    return False
+
 def is_court_confirmed(browser):
-  cookies_button = WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler")))
-  cookies_button.click()
+  click_cookies_button(browser)
   get_list_of_courts(browser)
   if is_court_available(browser):
     confirm_booking(browser)  
